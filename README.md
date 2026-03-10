@@ -2,11 +2,15 @@
 
 ## Background: smRNA-seq
 
+Single-microbe RNA sequencing (smRNA-seq) has emerged as a technology to monitor up to thousands of single microbial transcriptomes. For data integration and further utilization
+
 ## Principle and Possibilites
 
+This pipeline employs STARsolo for processing (mapping and quantifying) data from:
 - microSPLiT
 - PETRI-seq
-- MATQ-seq
+
+For processing MATQ-seq data, raw reads are trimmed with bbduk, followed by mapping with either STAR or HISAT and quantification with featureCounts.
 
 ## Installation & Usage
 
@@ -45,28 +49,40 @@ nextflow run process_smRNAseq --reads '*_{1,2}.fastq.gz' --microsplit \
 All arguments of the pipeline are listed below. Importantly, there are general and dataset-specific parameters to specify:
 
 #### Settings
---pubDirMode                  = "copy"
+```bash
+pubDirMode                  = "copy"
+```
 
 #### General input
-genomeFASTA                 = []            // at least one or multiple fasta files of bacterial/phage genomes
-genomeGFF                   = []            // at least one or multiple gff files of bacterial/phage genomes in same order as fasta files
-reads                       = "*.fastq.gz"  // reads to be processed and mapped (paired-end for PETRIseq and microSPLiT; single-end for MATQ-seq) 
-outputDir                   = "output"      // output directory for pipeline results
+```bash
+genomeFASTA                 = []
+genomeGFF                   = []
+reads                       = "*.fastq.gz"
+outputDir                   = "output"
+```
 
 #### Flag for protocol-specific processing
-// Select depending on data supplied
-// Then, specific parameters and commands will be executed for processing (see below)
+Select depending on data supplied
+Then, specific parameters and commands will be executed for processing (see below)
+
+```bash
 microsplit                  = false
 matqseq                     = false
 petriseq                    = false
+```
 
 #### microSPLiT-specific input
+
+```bash
 barcodes_microSPLiT_R1      = "/bin/barcodes_microSPLiT_R1.txt"
 barcodes_microSPLiT_R2      = "/bin/barcodes_microSPLiT_R2.txt"
 barcodes_microSPLiT_R3      = "/bin/barcodes_microSPLiT_R3.txt"
+```
 
 #### MATQ-seq-specific input
-use_hisat2                  = false // choose hisat2 or star for mapping reads
+
+```bash
+use_hisat2                  = false
 use_star                    = false
 bbduk_opts                  = "-Xmx16g t=8 minlen=18 qtrim=rl trimq=20 k=17 mink=11 hdist=1"
 bbduk_ref_left              = "/bin/matseq_primers.fa"
@@ -74,15 +90,20 @@ bbduk_ref_right             = "/bin/nextera_and_primers.fa"
 bbduk_polyA                 = 30
 countFeature                = "gene"
 featureIdentifier           = "ID"
+```
 
 #### PETRI-seq-specific input
+```bash
 barcodes_PETRIseq_R1        = "/bin/barcodes_PETRIseq_R1.txt"
 barcodes_PETRIseq_R2        = "/bin/barcodes_PETRIseq_R2.txt"
 barcodes_PETRIseq_R3        = "/bin/barcodes_PETRIseq_R3.txt"
+```
 
 #### Conda environments
 The environment containing all required packages must be named "smRNAseq"; otherwise rename in processes accordingly
+```bash
 conda_path                  = "USERPATH/mamba/envs"
+```
 
 Arguments can also be set in the config file (./conf/params.config)
 

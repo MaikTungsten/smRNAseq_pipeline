@@ -220,4 +220,3 @@ dependencies:
       - typeguard==4.4.4
       - typing-inspection==0.4.2
       - urllib3==2.6.2
-prefix: /ceph/ibmi/it/projects/ML_BI/Mamba/envs/smRNAseq

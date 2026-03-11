@@ -2,13 +2,11 @@
 
 ## Background: smRNA-seq
 
-Single-microbe RNA sequencing (smRNA-seq) has emerged as a technology to monitor up to thousands of single microbial transcriptomes. For data integration and further utilization
+Single-microbe RNA sequencing (smRNA-seq) has emerged as a technology to monitor up to thousands of single microbial transcriptomes. For data integration and further utilization, it is necessary to provide easy and reproducible processing of the raw sequencing data. Here, we provide a Nextflow pipeline, which allows to process smRNA-seq data from **microSPLiT**, **PETRI-seq** and **MATQ-seq** data with just one command.
 
 ## Principle and Possibilites
 
-This pipeline employs STARsolo for processing (mapping and quantifying) data from:
-- microSPLiT
-- PETRI-seq
+This pipeline employs STARsolo for processing (mapping and quantifying) data from microSPLiT and PETRI-seq. Custom barcode positions in the reads are encoded in a protocol-specific manner and default barcode lists are adpated from the original studies. Please adapt them, should you have made changes to the barcodes and linkers.
 
 For processing MATQ-seq data, raw reads are trimmed with bbduk, followed by mapping with either STAR or HISAT and quantification with featureCounts.
 
